@@ -34,20 +34,19 @@ public class AuthController {
   }
 
   /**
-   * Login token dto.
+   * Login string.
    *
    * @param authDto the auth dto
-   * @return the token dto
+   * @return the string
    */
   @PostMapping("/login")
   public TokenDto login(@RequestBody AuthDto authDto) {
-    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+    UsernamePasswordAuthenticationToken usernamePassword =
         new UsernamePasswordAuthenticationToken(authDto.username(), authDto.password());
 
-    Authentication authentication = authenticationManager
-        .authenticate(usernamePasswordAuthenticationToken);
+    Authentication auth = authenticationManager.authenticate(usernamePassword);
 
-    String token = tokenService.generateToken(authentication.getName());
+    String token = tokenService.generateToken(auth.getName());
 
     return new TokenDto(token);
   }

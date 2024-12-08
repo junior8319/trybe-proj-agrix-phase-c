@@ -73,13 +73,13 @@ public class PersonService implements UserDetailsService {
         .encode(person.getPassword());
 
     person.setPassword(hashedPassword);
-    
+
     return personRepository.save(person);
   }
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return (UserDetails) personRepository.findByUsername(username)
+    return  personRepository.findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException(username));
   }
 }

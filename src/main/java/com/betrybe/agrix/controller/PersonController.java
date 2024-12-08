@@ -6,7 +6,6 @@ import com.betrybe.agrix.entity.Person;
 import com.betrybe.agrix.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,11 +37,10 @@ public class PersonController {
    * @return the person dto
    */
   @PostMapping
-
-  public ResponseEntity<PersonDto> createPerson(@RequestBody PersonCreationDto personCreationDto) {
+  @ResponseStatus(HttpStatus.CREATED)
+  public PersonDto createPerson(@RequestBody PersonCreationDto personCreationDto) {
     Person newPerson = personService.create(personCreationDto.toEntity());
 
-    return ResponseEntity.status(HttpStatus.CREATED)
-        .body(PersonDto.fromEntity(newPerson));
+    return PersonDto.fromEntity(newPerson);
   }
 }
